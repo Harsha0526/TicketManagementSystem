@@ -80,11 +80,19 @@ public class TicketServiceImpl implements TicketService {
 
 		Optional<Organization> org = organizationService.findById(ticketUpdateRequest.getOrgId());
 		assertTrue("Invalid Org ID", org.isPresent());
+		
+		Ticket persistedTicket = ticketRepository.findById(ticketId).get();
 
 		Ticket ticket = new Ticket(ticketId, ticketUpdateRequest.getDescription(), ticketUpdateRequest.getTitle(),
 				TicketStatus.valueOf(ticketUpdateRequest.getStatus()).toString(), adminIdToBeAssigned.get(), org.get());
+		
+		persistedTicket.setOrganization(ticket.getOrganization());
+		persistedTicket.setDescription(ticket.getDescription());
+		persistedTicket.setTitle(ticket.getTitle());
+		persistedTicket.setAdministrator(ticket.getAdministrator());
+		persistedTicket.setStatus(ticket.getStatus());
 
-		return upsertTicket(ticket);
+		return upsertTicket(persistedTicket);
 
 	}
 

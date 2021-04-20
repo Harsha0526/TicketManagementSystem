@@ -6,9 +6,6 @@ import javax.validation.constraints.Size;
 public class TicketUpdateRequest {
 	
 	@NotBlank
-	private String id;
-	
-	@NotBlank
 	@Size(min = 1, max = 500, message = "Max description 500 characters")
 	private String description;
 
@@ -24,14 +21,6 @@ public class TicketUpdateRequest {
 	
 	@NotBlank
 	private String orgId;
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
-		this.id = id;
-	}
 
 	public String getDescription() {
 		return description;
