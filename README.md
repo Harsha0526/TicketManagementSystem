@@ -22,6 +22,7 @@ authorization --> Not Required
 Using this scret now orgs can create Administrators in the Tickting managment System.
 For creating Administrators we can use following end point using Secret Key.
 
+```
 EndPoint --> `/auth/admin/signup` "POST"
 Payload --> 
 {
@@ -32,6 +33,7 @@ Payload -->
     "secret": "JuVGkloGLLMX5WBkZFoE0qKQcwLPfqLwsRGtkLtWu3n8Zxh690"
 }
 authorization --> Screct Key required
+```
 
 
 3] Once admin singup using the above Endpoint, they can signin using the below Endpoint --> 
@@ -47,9 +49,11 @@ authorization --> Not Required
 ```
 User will receive a JWT Bearer token after signin 
 
+```
 {
     "jwt": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJrYXJ0aWtleS5yYWpAZnlsZS5pbiIsImV4cCI6MTYxODkwNzQ3OSwiaWF0IjoxNjE4ODcxNDc5fQ.JyC0hOwAATnKm4dqKB8-m-19XV7a6lB4VMGUj9T8SSM"
 }
+```
 
 
 
@@ -140,5 +144,11 @@ Remark --> All the Actions like Scheduling Job setting Closed_at will happen nor
 
 
 
->I have Used JobRunR for scheduling jobs you ca always got to
->URL --> `localhost:8000` in the browser for checking the dashboard.
+## I have Used JobRunR for scheduling jobs you ca always got to
+## The smallest heading URL --> `localhost:8000` in the browser for checking the dashboard.
+
+
+
+
+
+Thanks
