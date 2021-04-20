@@ -15,11 +15,14 @@ Payload --> {
 authorization --> Not Required 
 ````
 
-2] Once orgs sigup using the above endpoint orgs will get a Secret Key 
+2] Once orgs sigup using the above endpoint orgs will get a "Secret Key" 
 
-```Example --> JuVGkloGLLMX5WBkZFoE0qKQcwLPfqLwsRGtkLtWu3n8Zxh690```
+```
+Example --> 
+Secret: "JuVGkloGLLMX5WBkZFoE0qKQcwLPfqLwsRGtkLtWu3n8Zxh690"
+```
 
-Using this scret now orgs can create Administrators in the Tickting managment System.
+Using this scret now orgs can create "Administrators" in the Tickting managment System.
 For creating Administrators we can use following end point using Secret Key.
 
 ```
@@ -57,7 +60,7 @@ User will receive a JWT Bearer token after signin
 
 
 
-4] Tickets In Tickting managment System will be created by the users through the Ticket managment system's Client In our Case Growfin, so user detail and authorization of the user will be taken care by Growfin, tickets will be generated from Growfin application using the secret using following EndPoint -->
+4] Tickets In Tickting managment System will be created by the users through the Ticket managment system's Client In our Case Growfin, so user detail and authorization of the user will be taken care by Growfin, tickets will be generated from Growfin application using the "secret" using following EndPoint -->
 
 ```
 EndPoint --> "/tickets" "POST"
