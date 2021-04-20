@@ -144,12 +144,11 @@ Authorization --> JWT token required
 Remark --> All the Actions like Scheduling Job setting Closed_at will happen normally by this API call aswell.
 
 
+```
+I have Used JobRunR for scheduling jobs you ca always got to
+The smallest heading URL --> `localhost:8000` in the browser for checking the dashboard.
 
-## I have Used JobRunR for scheduling jobs you ca always got to
-## The smallest heading URL --> `localhost:8000` in the browser for checking the dashboard.
-
-
-
+```
 
 
 Thanks
