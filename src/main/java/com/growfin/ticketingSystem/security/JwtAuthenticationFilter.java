@@ -1,3 +1,15 @@
+
+/*Changes Made:
+Constants: Introduced AUTHORIZATION_HEADER and BEARER_PREFIX constants to avoid magic strings and improve readability.
+
+Magic Strings refer to the use of hard-coded string values directly in the code. These strings are called "magic" because their meaning or purpose isn't immediately clear to someone reading the code, making the code harder to understand and maintain. 
+
+
+Helper Methods: Created getJwtFromRequest and setAuthenticationForUser helper methods to separate concerns and make the doFilterInternal method cleaner.
+Error Handling: Added a try-catch block around the main logic in doFilterInternal to log any exceptions that might occur.
+Logging: Added logging for exception handling (assuming there is a logger configured in the class).
+These changes improve the readability, maintainability, and reliability of the code.;*/
+
 package com.growfin.ticketingSystem.security;
 
 import java.io.IOException;
@@ -7,53 +19,63 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.growfin.ticketingSystem.services.CustomUserDetailsService;
 
-
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	
-	@Autowired
+    
+    private static final String AUTHORIZATION_HEADER = "Authorization";
+    private static final String BEARER_PREFIX = "Bearer ";
+
+    @Autowired
     private JwtTokenProvider tokenProvider;
-	
-	@Autowired
-	private CustomUserDetailsService customUserDetailsService;
 
-	 @Override
-	    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
-	            throws ServletException, IOException {
+    @Autowired
+    private CustomUserDetailsService customUserDetailsService;
 
-	        final String authorizationHeader = request.getHeader("Authorization");
+    @Override
+    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+            throws ServletException, IOException {
 
-	        String username = null;
-	        String jwt = null;
+        try {
+            String jwt = getJwtFromRequest(request);
 
-	        if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-	            jwt = authorizationHeader.substring(7);
-	            username = tokenProvider.extractUsername(jwt);
-	        }
+            if (jwt != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                String username = tokenProvider.extractUsername(jwt);
 
+                if (username != null) {
+                    UserDetails userDetails = customUserDetailsService.loadUserByUsername(username);
 
-	        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                    if (tokenProvider.validateToken(jwt, userDetails)) {
+                        setAuthenticationForUser(request, userDetails);
+                    }
+                }
+            }
+        } catch (Exception ex) {
+            logger.error("Could not set user authentication in security context", ex);
+        }
 
-	            UserDetails userDetails = this.customUserDetailsService.loadUserByUsername(username);
+        chain.doFilter(request, response);
+    }
 
-	            if (tokenProvider.validateToken(jwt, userDetails)) {
+    private String getJwtFromRequest(HttpServletRequest request) {
+        String bearerToken = request.getHeader(AUTHORIZATION_HEADER);
+        if (bearerToken != null && bearerToken.startsWith(BEARER_PREFIX)) {
+            return bearerToken.substring(BEARER_PREFIX.length());
+        }
+        return null;
+    }
 
-	                UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
-	                        userDetails, null, userDetails.getAuthorities());
-	                usernamePasswordAuthenticationToken
-	                        .setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-	                SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
-	            }
-	        }
-	        chain.doFilter(request, response);
-	    }
-
+    private void setAuthenticationForUser(HttpServletRequest request, UserDetails userDetails) {
+        UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
+                userDetails, null, userDetails.getAuthorities());
+        authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
 }
