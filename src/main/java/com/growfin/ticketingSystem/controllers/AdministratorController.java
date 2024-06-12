@@ -11,20 +11,16 @@ import com.growfin.ticketingSystem.services.AdministratorService;
 @Controller
 @RequestMapping("/admins")
 public class AdministratorController {
-	
-	
-	@Autowired
-	private AdministratorService administratorService;
-	
-	
-	@GetMapping()
-	private ResponseEntity<?> getAdmin() {
-		
-		return new ResponseEntity<>(administratorService.findAll(),
-				HttpStatus.OK);
-		
-	}
-	
-	
 
+    @Autowired
+    private AdministratorService administratorService;
+
+    @GetMapping()
+    private ResponseEntity<?> getAllAdministrators() {
+        try {
+            return new ResponseEntity<>(administratorService.findAll(), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while fetching administrators.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
