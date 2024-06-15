@@ -56,34 +56,18 @@ public class Administrator extends DateAudit {
 	@ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "org_id", referencedColumnName = "id")
     private Organization organization;
-
-    // New Fields
-    @Size(max = 15)
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
-	@Size(max = 100)
-    @Column(name = "address")
-    private String address;
-
-    @NotNull
-    @Column(name = "status")
-    private String status;
-
+	
+	
 	public Administrator(@NotNull @Size(min = 4, max = 40, message = "Max 50 characters") String firstName,
 			@Size(min = 4, max = 40, message = "Max 50 characters") String lastName,
 			@NotNull @Size(max = 40) @Email String email, @NotNull @Size(max = 100) String password,
-			@NotNull Organization organization, @Size(max = 15) String phoneNumber, @Size(max = 100) String address,
-			@NotNull String status) {
+			@NotNull Organization organization){
 		super();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;
 		this.password = password;
 		this.organization = organization;
-		this.phoneNumber = phoneNumber;
-        this.address = address;
-        this.status = status;
 	}
 
 	public Administrator() {
@@ -137,29 +121,5 @@ public class Administrator extends DateAudit {
 	public void setOrganization(Organization organization) {
 		this.organization = organization;
 	}
-	
-	public String getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    public String getStatus() {
-        return status;
-    }
-
-    public void setStatus(String status) {
-        this.status = status;
-    }
 
 }
