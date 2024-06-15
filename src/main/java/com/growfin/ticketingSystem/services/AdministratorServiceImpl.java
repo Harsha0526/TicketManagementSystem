@@ -25,7 +25,7 @@ public class AdministratorServiceImpl implements AdministratorService {
         admin.setFirstName(signUpRequest.getFirstName());
         admin.setLastName(signUpRequest.getLastName());
         admin.setEmail(signUpRequest.getEmail());
-        admin.setPassword(signUpRequest.getPassword()); // Implement password encryption here if needed
+        admin.setPassword(signUpRequest.getPassword()); 
         admin.setOrganization(organization);
         admin.setPhoneNumber(signUpRequest.getPhoneNumber());
         admin.setAddress(signUpRequest.getAddress());
