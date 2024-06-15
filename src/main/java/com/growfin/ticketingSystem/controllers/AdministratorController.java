@@ -23,4 +23,24 @@ public class AdministratorController {
             return new ResponseEntity<>("An error occurred while fetching administrators.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PostMapping()
+    private ResponseEntity<?> createAdministrator(@RequestBody SignUpRequest signUpRequest) {
+        try {
+            Administrator createdAdmin = administratorService.createAdmin(signUpRequest);
+            return new ResponseEntity<>(createdAdmin, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while creating the administrator.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{id}")
+    private ResponseEntity<?> updateAdministrator(@PathVariable String id, @RequestBody Administrator administrator) {
+        try {
+            administrator.setId(id);
+            Administrator updatedAdmin = administratorService.updateAdministrator(administrator);
+            return new ResponseEntity<>(updatedAdmin, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("An error occurred while updating the administrator.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }
