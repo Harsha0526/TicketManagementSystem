@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.growfin.ticketingSystem.models.Administrator;
 
-@Repository("administratorRepository")
+@Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, String> {
 
 	Administrator findByEmail(String email);
@@ -15,9 +15,9 @@ public interface AdministratorRepository extends JpaRepository<Administrator, St
 	Boolean existsByEmail(String email);
 
 	@Query(nativeQuery = true, value = "SELECT admin_id FROM tickets tic WHERE tic.org_id = (:orgId) and tic.status = (:status) group by tic.admin_id order by count(*) ASC limit 1")
-	public String findAvailableAdmin(@Param("orgId") String orgId, @Param("status") String status);
+	String findAvailableAdmin(@Param("orgId") String orgId, @Param("status") String status);
 
 	@Query(nativeQuery = true, value = "SELECT * FROM administrators admin WHERE admin.org_id = (:orgId) limit 1")
-	public Administrator findFirstAdminstrator(@Param("orgId") String orgId);
+	Administrator findFirstAdminstrator(@Param("orgId") String orgId);
 
 }
