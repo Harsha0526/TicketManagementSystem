@@ -36,6 +36,7 @@ public class Organization extends DateAudit {
 	@Size(min = 1, max = 50, message = "max 50 characters")
 	@Column(name = "name")
 	private String name;
+	
 
 	@NotNull
 	@Size(min = 1, max = 50, message = "max 50 characters")
@@ -54,17 +55,35 @@ public class Organization extends DateAudit {
 	@OneToMany(mappedBy="organization")
     private Set<Administrator> administrators;
 
+		@Size(max = 100)
+		@Column(name = "address")
+		private String address;
+	
+		@Size(max = 15)
+		@Column(name = "phone_number")
+		private String phoneNumber;
+	
+		@NotNull
+		@Column(name = "status")
+		private String status;
+
 	public Organization() {
 		super();
 	}
 
-	public Organization(@NotNull @Size(min = 1, max = 50, message = "max 50 characters") String name,
-			@NotNull @Size(min = 1, max = 50, message = "max 50 characters") String domain,
-			@NotNull OrganizationSecretMapping organizationSecretMapping) {
+    public Organization(@NotNull @Size(min = 1, max = 50, message = "max 50 characters") String name,
+                        @NotNull @Size(min = 1, max = 50, message = "max 50 characters") String domain,
+                        @NotNull OrganizationSecretMapping organizationSecretMapping,
+                        @Size(max = 100) String address,
+                        @Size(max = 15) String phoneNumber,
+                        @NotNull String status) {
 		super();
 		this.name = name;
 		this.domain = domain;
 		this.organizationSecretMapping = organizationSecretMapping;
+		this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
 	}
 
 	public String getId() {
@@ -98,7 +117,29 @@ public class Organization extends DateAudit {
 	public void setOrganizationSecretMapping(OrganizationSecretMapping organizationSecretMapping) {
 		this.organizationSecretMapping = organizationSecretMapping;
 	}
-	
-	
 
+	public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }
+	
