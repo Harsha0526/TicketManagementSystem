@@ -24,7 +24,13 @@ public class OrganizationServiceImpl implements OrganizationService {
 
 		OrganizationSecretMapping organizationSecretMapping = organizationSecretMappingService.upsertOrg();
 		
-		Organization org = new Organization(organizationRequest.getName(), organizationRequest.getDomain(), organizationSecretMapping);
+		Organization org = new Organization(organizationRequest.getName(), 
+		organizationRequest.getDomain(), 
+		organizationSecretMapping
+		organizationRequest.getAddress(),         
+        organizationRequest.getPhoneNumber(),     
+        organizationRequest.getStatus()           
+		);
 
 		return organizationRepository.save(org);
 	}
@@ -41,5 +47,10 @@ public class OrganizationServiceImpl implements OrganizationService {
 		
 		return organizationRepository.findOrgBySecret(secret);
 	}
+
+	@Override
+    public Organization updateOrganization(Organization organization) { // New method
+        return organizationRepository.save(organization);
+    }
 
 }
