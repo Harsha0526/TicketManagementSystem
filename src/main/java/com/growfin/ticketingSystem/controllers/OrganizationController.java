@@ -39,4 +39,27 @@ public class OrganizationController {
             return new ResponseEntity<>("Error occurred while fetching organization details.", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateOrganization(@PathVariable("id") String id, @RequestBody OrganizationRequest organizationRequest) {
+        try {
+            Optional<Organization> organizationData = organizationService.findById(id);
+
+            if (organizationData.isPresent()) {
+                Organization organization = organizationData.get();
+                organization.setName(organizationRequest.getName());
+                organization.setDomain(organizationRequest.getDomain());
+                organization.setOrganizationSecretMapping(organization.getOrganizationSecretMapping());
+                organization.setAddress(organizationRequest.getAddress());           
+                organization.setPhoneNumber(organizationRequest.getPhoneNumber());   
+                organization.setStatus(organizationRequest.getStatus());             
+
+                Organization updatedOrganization = organizationService.updateOrganization(organization);
+                return new ResponseEntity<>(updatedOrganization, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("Organization not found.", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            return new ResponseEntity<>("Error occurred while updating organization.", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

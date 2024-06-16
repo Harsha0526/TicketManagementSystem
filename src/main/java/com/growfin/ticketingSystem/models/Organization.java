@@ -30,10 +30,18 @@ public class Organization extends DateAudit {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
+<<<<<<< HEAD
     @NotNull
     @Size(min = 1, max = 50, message = "Maximum 50 characters allowed")
     @Column(name = "name")
     private String name;
+=======
+	@NotNull
+	@Size(min = 1, max = 50, message = "max 50 characters")
+	@Column(name = "name")
+	private String name;
+	
+>>>>>>> c034f24e72d6bb9c72caaafa753dba3275237bfd
 
     @NotNull
     @Size(min = 1, max = 50, message = "Maximum 50 characters allowed")
@@ -51,6 +59,7 @@ public class Organization extends DateAudit {
     @OneToMany(mappedBy = "organization")
     private Set<Administrator> administrators;
 
+<<<<<<< HEAD
     /**Default constructor.*/
     public Organization() {
         super();
@@ -65,6 +74,38 @@ public class Organization extends DateAudit {
         this.domain = domain;
         this.organizationSecretMapping = organizationSecretMapping;
     }
+=======
+		@Size(max = 100)
+		@Column(name = "address")
+		private String address;
+	
+		@Size(max = 15)
+		@Column(name = "phone_number")
+		private String phoneNumber;
+	
+		@NotNull
+		@Column(name = "status")
+		private String status;
+
+	public Organization() {
+		super();
+	}
+
+    public Organization(@NotNull @Size(min = 1, max = 50, message = "max 50 characters") String name,
+                        @NotNull @Size(min = 1, max = 50, message = "max 50 characters") String domain,
+                        @NotNull OrganizationSecretMapping organizationSecretMapping,
+                        @Size(max = 100) String address,
+                        @Size(max = 15) String phoneNumber,
+                        @NotNull String status) {
+		super();
+		this.name = name;
+		this.domain = domain;
+		this.organizationSecretMapping = organizationSecretMapping;
+		this.address = address;
+        this.phoneNumber = phoneNumber;
+        this.status = status;
+	}
+>>>>>>> c034f24e72d6bb9c72caaafa753dba3275237bfd
 
     public String getId() {
         return id;
@@ -85,6 +126,7 @@ public class Organization extends DateAudit {
         this.name = name;
     }
 
+<<<<<<< HEAD
 
     public String getDomain() {
         return domain;
@@ -122,5 +164,34 @@ public class Organization extends DateAudit {
 
     public void setAdministrators(Set<Administrator> administrators) {
         this.administrators = administrators;
+=======
+	public void setOrganizationSecretMapping(OrganizationSecretMapping organizationSecretMapping) {
+		this.organizationSecretMapping = organizationSecretMapping;
+	}
+
+	public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+>>>>>>> c034f24e72d6bb9c72caaafa753dba3275237bfd
     }
 }
+	
