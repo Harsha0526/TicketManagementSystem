@@ -13,4 +13,6 @@ public interface OrganizationService {
 
 	Organization findOrgBySecret(String secret);
 
+	Organization updateOrganization(Organization organization); 
+
 }
