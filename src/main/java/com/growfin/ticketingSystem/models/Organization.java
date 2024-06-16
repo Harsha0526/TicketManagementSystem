@@ -18,87 +18,109 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.growfin.ticketingSystem.models.payloads.DateAudit;
 
+/**Entity class representing an Organization.*/
 @Entity
 @Table(name = "organizations")
 public class Organization extends DateAudit {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	@Id
-	@GeneratedValue(generator = "uuid")
-	@GenericGenerator(name = "uuid", strategy = "uuid2")
-	private String id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
-	@NotNull
-	@Size(min = 1, max = 50, message = "max 50 characters")
-	@Column(name = "name")
-	private String name;
+    @NotNull
+    @Size(min = 1, max = 50, message = "Maximum 50 characters allowed")
+    @Column(name = "name")
+    private String name;
 
-	@NotNull
-	@Size(min = 1, max = 50, message = "max 50 characters")
-	@Column(name = "domain")
-	private String domain;
-	
-	@NotNull
-	@OneToOne(cascade = CascadeType.ALL)
+    @NotNull
+    @Size(min = 1, max = 50, message = "Maximum 50 characters allowed")
+    @Column(name = "domain")
+    private String domain;
+
+    @NotNull
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "secret_mapping_id", referencedColumnName = "id")
-	private OrganizationSecretMapping organizationSecretMapping;
-	
-	
-	@OneToMany(mappedBy="organization")
+    private OrganizationSecretMapping organizationSecretMapping;
+
+    @OneToMany(mappedBy = "organization")
     private Set<Ticket> tickets;
-	
-	@OneToMany(mappedBy="organization")
+
+    @OneToMany(mappedBy = "organization")
     private Set<Administrator> administrators;
 
-	public Organization() {
-		super();
-	}
+    /**Default constructor.*/
+    public Organization() {
+        super();
+    }
 
-	public Organization(@NotNull @Size(min = 1, max = 50, message = "max 50 characters") String name,
-			@NotNull @Size(min = 1, max = 50, message = "max 50 characters") String domain,
-			@NotNull OrganizationSecretMapping organizationSecretMapping) {
-		super();
-		this.name = name;
-		this.domain = domain;
-		this.organizationSecretMapping = organizationSecretMapping;
-	}
+    /*Parameterized constructor.*/
+    public Organization(@NotNull @Size(min = 1, max = 50, message = "Maximum 50 characters allowed") String name,
+                        @NotNull @Size(min = 1, max = 50, message = "Maximum 50 characters allowed") String domain,
+                        @NotNull OrganizationSecretMapping organizationSecretMapping) {
+        super();
+        this.name = name;
+        this.domain = domain;
+        this.organizationSecretMapping = organizationSecretMapping;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
 
-	public String getName() {
-		return name;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
 
-	public String getDomain() {
-		return domain;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
 
-	public OrganizationSecretMapping getOrganizationSecretMapping() {
-		return organizationSecretMapping;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setOrganizationSecretMapping(OrganizationSecretMapping organizationSecretMapping) {
-		this.organizationSecretMapping = organizationSecretMapping;
-	}
-	
-	
 
+    public String getDomain() {
+        return domain;
+    }
+
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
+
+
+    public OrganizationSecretMapping getOrganizationSecretMapping() {
+        return organizationSecretMapping;
+    }
+
+
+    public void setOrganizationSecretMapping(OrganizationSecretMapping organizationSecretMapping) {
+        this.organizationSecretMapping = organizationSecretMapping;
+    }
+
+
+    public Set<Ticket> getTickets() {
+        return tickets;
+    }
+
+
+    public void setTickets(Set<Ticket> tickets) {
+        this.tickets = tickets;
+    }
+
+    public Set<Administrator> getAdministrators() {
+        return administrators;
+    }
+
+
+    public void setAdministrators(Set<Administrator> administrators) {
+        this.administrators = administrators;
+    }
 }
